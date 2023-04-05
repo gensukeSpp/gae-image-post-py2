@@ -20,6 +20,8 @@ from webapp2_extras import jinja2
 from wtforms import Form, StringField, PasswordField, validators
 from wtforms.validators import DataRequired
 
+from index import pass_admin
+
 def jinja2_factory(app):
     "True ninja method for attaching additional globals/filters to jinja"
 
@@ -101,15 +103,15 @@ class SignupForm(Form):
 
 class SignupHandler(BaseHandler):
     "Serves up a signup form, creates new users"
-    # @pass_admin
+    @pass_admin
     def get(self):
 
         # I Would like to be Decorator
-        admin = users.is_current_user_admin()
-        if not admin:
-            self.response.write('You are not an administrator.')
-        else:
-            self.render_response("register.html", form=SignupForm())
+        # admin = users.is_current_user_admin()
+        # if not admin:
+        #     self.response.write('You are not an administrator.')
+        # else:
+        self.render_response("register.html", form=SignupForm())
 
     def post(self):
 

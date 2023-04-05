@@ -4,7 +4,7 @@ import os
 import cgi
 import sys
 import urllib
-from PIL import Image
+# from PIL import Image
 from itertools import chain
 
 from google.appengine.ext import ndb
@@ -75,7 +75,7 @@ def user_required(handler):
             # If handler has no login_url specified invoke a 403 error
             try:
                 self.redirect(self.auth_config['login_url'], abort=True)
-            except (AttributeError, KeyError), e:
+            except (AttributeError, KeyError) as e:
                 self.abort(403)
         else:
             user_session = self.auth.get_user_by_session()

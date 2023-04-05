@@ -1,18 +1,23 @@
-application: petit-imgpost
+application: petit-imgpost3
 version: 1
-runtime: python27
+runtime: python310
 api_version: 1
 threadsafe: yes
 
-libraries:
-- name: webapp2
-  version: latest
+app_engine_apis: true
 
-- name: jinja2
-  version: latest
+env_variables:
+  BUCKET_NAME: "my-image-bucket"
+
+# libraries:
+# - name: webapp2
+#   version: latest
+
+# - name: jinja2
+#   version: latest
   
-- name: PIL
-  version: latest
+# - name: PIL
+#   version: latest
 
 handlers:
 - url: /static
@@ -44,3 +49,5 @@ handlers:
 
 - url: /.*
   script: routes.application
+
+entrypoint: gunicorn -b :$PORT main:app
