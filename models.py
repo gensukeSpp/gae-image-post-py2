@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 
-from google.appengine.ext import ndb
+# from google.appengine.ext import client
 
 import webapp2_extras.appengine.auth.models as auth_models
 
-class PostUser(auth_models.User):
-    nickname = ndb.StringProperty()
-    mates = ndb.KeyProperty(repeated=True)
+from google.cloud import ndb
 
-class ImageBlob(ndb.Model):
-    file_name = ndb.StringProperty()
-    content_type = ndb.StringProperty()
-    file_size = ndb.IntegerProperty()
-    upload_date = ndb.DateTimeProperty(auto_now_add=True)
-    image_url = ndb.StringProperty()
-    proprietor = ndb.StringProperty()
+client = ndb.Client()
+
+class PostUser(auth_models.User):
+    nickname = client.StringProperty()
+    mates = client.KeyProperty(repeated=True)
+
+class ImageBlob(client.Model):
+    file_name = client.StringProperty()
+    content_type = client.StringProperty()
+    file_size = client.IntegerProperty()
+    upload_date = client.DateTimeProperty(auto_now_add=True)
+    image_url = client.StringProperty()
+    proprietor = client.StringProperty()
 
     # @property
     def getting(self):
@@ -25,7 +29,7 @@ class ImageBlob(ndb.Model):
     def query_content(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key)
 
-class ExplainArticle(ndb.Model):
-    articles = ndb.StringProperty(repeated=True)
-    update_date = ndb.DateTimeProperty(auto_now_add=True)
-    blob_key = ndb.KeyProperty(kind=ImageBlob)
+class ExplainArticle(client.Model):
+    articles = client.StringProperty(repeated=True)
+    update_date = client.DateTimeProperty(auto_now_add=True)
+    blob_key = client.KeyProperty(kind=ImageBlob)
